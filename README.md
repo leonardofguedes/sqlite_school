@@ -1,1 +1,1 @@
-# sqlite_school
+# Using SQLite to analyze data.
