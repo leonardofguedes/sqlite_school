@@ -37,19 +37,27 @@ def show_classes(): # mostra as turmas no DBase
     Consulta1 = Cursor.execute('SELECT Turma FROM Alunos').fetchall()
     list_classes(Consulta1)
 
+def show(): #recebe a info do usuário sobre as turmas na DBase
+    dww = input('Show all? [Y][N][C]').lower()
+    if dww == 'y':
+        show_all()
+    if dww == 'c':
+        print('Show Classes')
+        show_classes()
+
 
 def app_add_student(): # app
     while True:
         filtro(adicionar())
-        dww = input('Show all? [Y][N][C]').lower()
-        if dww == 'y':
-            show_all()
-        if dww == 'c':
-            print('Show Classes')
-            show_classes()
-        dwb = input('End program?[Y][N]').lower()
-        if dwb == 'y':
-            break
+        show()
+        try:
+            dwb = input('End program?[Y][N]').lower()
+            if dwb == 'y':
+                break
+            elif dwb == 'n':
+                pass
+        except:
+            print('Not Understand')
 
 
 app_add_student()
