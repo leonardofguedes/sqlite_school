@@ -1,29 +1,34 @@
-from classes import Person
+from classes import Student
 from create_db import Cursor
 from itertools import chain
 
 
-def adicionar():  # recolhe os dados e insere na Classe
+def adicionar():
+    """recebe dados do usuário e insere na class"""
     nome = input('Nome: ->')
     cpf = (input('Cpf: ->'))
     turma = int(input('Turma: ->'))
-    student1 = Person(nome, cpf, turma)
+    matricula = int(input('Matricula: ->'))
+    student1 = Student(nome, cpf, turma, matricula)
     return student1.__iter__()
 
 
-def filtro(iteravel):  # recolhe os dados da Class e insere no Data Base
+def filtro(iteravel):
+    """recolhe dados da Class e insere no dbase"""
     lista = []
     for n in iteravel:
         lista.append(n)
-    Cursor.execute(f' INSERT INTO Alunos VALUES ("{lista[0]}", "{lista[1]}", "{lista[2]}", "{lista[3]}" ) ')
+    Cursor.execute(f' INSERT INTO Alunos VALUES ("{lista[0]}", "{lista[1]}", "{lista[2]}", "{lista[3]}", "{lista[4]}") ')
 
 
-def show_all():  # mostra o banco de dados
+def show_all():
+    """function mostra todos os dados do db"""
     Consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
     print(Consulta)
 
 
-def list_classes(iteravel):  # função para extrair apenas int do iterável e não mostrar turma repetida
+def list_classes(iteravel):
+    """function que extrai apenas int do iterável e ignora turmas repetidas"""
     temp = map(lambda i: str(i), chain.from_iterable(iteravel))
     d = []
     for ele in temp:
@@ -34,12 +39,14 @@ def list_classes(iteravel):  # função para extrair apenas int do iterável e n
             d.append(ele)
 
 
-def show_classes():  # mostra as turmas no DBase
+def show_classes():
+    """function mostra dados do db"""
     Consulta1 = Cursor.execute('SELECT Turma FROM Alunos').fetchall()
     list_classes(Consulta1)
 
 
-def show():  # recebe a info do usuário sobre as turmas na DBase
+def show():
+    """function que recebe a info do usuario sobre mostrar dados"""
     dww = input('Show all? [Y][N][C]').lower()
     if dww == 'y':
         show_all()
@@ -50,7 +57,8 @@ def show():  # recebe a info do usuário sobre as turmas na DBase
         pass
 
 
-def add_or_end(): # função para encerrar o programa ou continuar a adicionar
+def add_or_end():
+    """ function p/ encerrar o programa ou continuar a adicionar"""
     while True:
         try:
             a = input('Do you want to ADD more or END the program? [ADD][END]').strip().lower()

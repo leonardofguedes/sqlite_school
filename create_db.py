@@ -5,6 +5,6 @@ Cursor = Escola.cursor()
 
 """
 Cursor.execute(
-   'CREATE TABLE Alunos ( Nome text, Id int, CPF int, Turma int)'
+   'CREATE TABLE Alunos ( Nome text, Id int, CPF int, Turma int, Matricula int)'
 )
 """
