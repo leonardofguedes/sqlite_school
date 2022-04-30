@@ -3,25 +3,22 @@ class Person:
 
     def __init__(self, nome, cpf, turma):
         Person.id += 1
-        self.__nome = nome.strip().title()
-        self.__id = Person.id
-        self.__cpf = cpf
-        self.__turma = turma
+        self.nome = nome.strip().title()
+        self.id = Person.id
+        self.cpf = cpf
+        self.turma = turma
 
-    def __iter__(self):
-        return [self.__nome, self.__id, self.__cpf, self.__turma]
+    def __str__(self):
+        return self.nome, self.id, self.cpf, self.turma
 
 
 class Student(Person):
 
     def __init__(self, nome, cpf, turma, matricula):
         Person.__init__(self, nome, cpf, turma)
-        self.__matricula = matricula
+        self.matricula = matricula
 
-    def __iter__(self):
-        lis = []
-        for n in Person.__iter__(self):
-            lis.append(n)
-        lis.append(self.__matricula)
-        return lis
+
+    def sql_in(self):
+        return self.nome, self.id, self.cpf, self.turma, self.matricula
 

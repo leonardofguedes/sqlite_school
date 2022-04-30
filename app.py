@@ -1,4 +1,4 @@
-from classes import Student
+from classes import Person,Student
 from create_db import Cursor
 from itertools import chain
 
@@ -10,15 +10,12 @@ def adicionar():
     turma = int(input('Turma: ->'))
     matricula = int(input('Matricula: ->'))
     student1 = Student(nome, cpf, turma, matricula)
-    return student1.__iter__()
+    return student1.sql_in()
 
 
 def filtro(iteravel):
     """recolhe dados da Class e insere no dbase"""
-    lista = []
-    for n in iteravel:
-        lista.append(n)
-    Cursor.execute(f' INSERT INTO Alunos VALUES ("{lista[0]}", "{lista[1]}", "{lista[2]}", "{lista[3]}", "{lista[4]}") ')
+    Cursor.execute(f' INSERT INTO Alunos VALUES ("{iteravel[0]}", "{iteravel[1]}", "{iteravel[2]}", "{iteravel[3]}", "{iteravel[4]}") ')
 
 
 def show_all():
