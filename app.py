@@ -1,4 +1,4 @@
-from classes import Person,Student
+from classes import Person, Student
 from create_db import Cursor
 from itertools import chain
 
@@ -15,13 +15,26 @@ def adicionar():
 
 def filtro(iteravel):
     """recolhe dados da Class e insere no dbase"""
-    Cursor.execute(f' INSERT INTO Alunos VALUES ("{iteravel[0]}", "{iteravel[1]}", "{iteravel[2]}", "{iteravel[3]}", "{iteravel[4]}") ')
+    Cursor.execute(f' INSERT INTO Alunos VALUES\n'
+                   f'("{iteravel[0]}","{iteravel[1]}", "{iteravel[2]}", "{iteravel[3]}", "{iteravel[4]}") ')
 
 
 def show_all():
     """function mostra todos os dados do db"""
+    consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
+    return consulta
+
+
+def show_students():
+    """function mostra os students de uma turma"""
     Consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
-    print(Consulta)
+    try:
+        turma = int(input('Turma a consultar: ->'))
+        for n in Consulta:
+            if n[3] == turma:
+                print(n)
+    except:
+        pass
 
 
 def list_classes(iteravel):
@@ -38,21 +51,27 @@ def list_classes(iteravel):
 
 def show_classes():
     """function mostra dados do db"""
-    Consulta1 = Cursor.execute('SELECT Turma FROM Alunos').fetchall()
-    list_classes(Consulta1)
+    consulta = Cursor.execute('SELECT Turma FROM Alunos').fetchall()
+    list_classes(consulta)
 
 
 def show():
     """function que recebe a info do usuario sobre mostrar dados"""
-    dww = input('Show all? [Y][N][C]').lower()
+    dww = input('Show all? [Y][N][E]').lower()
     if dww == 'y':
-        show_all()
-    elif dww == 'c':
-        print('Show Classes')
-        show_classes()
-    else:
+        print(show_all())
+    elif dww == 'n':
         pass
-
+    else:
+        print('Show especifics:')
+        especifics = input('Classes [C] or Students of Classes [SC]: ->').strip().lower()
+        if especifics == 'c':
+            print('Show Classes:')
+            show_classes()
+        if especifics == 'sc':
+            show_students()
+        else:
+            pass
 
 def add_or_end():
     """ function p/ encerrar o programa ou continuar a adicionar"""
