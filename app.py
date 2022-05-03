@@ -1,6 +1,7 @@
 from classes import Person, Student
 from create_db import Cursor
 from itertools import chain
+from fake_students import criando_pessoas
 
 
 def adicionar():
@@ -30,6 +31,7 @@ def show_students():
     Consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
     try:
         turma = int(input('Turma a consultar: ->'))
+        print('Nome | ID | CPF | Turma | Matricula')
         for n in Consulta:
             if n[3] == turma:
                 print(n)
@@ -73,15 +75,18 @@ def show():
         else:
             pass
 
+
 def add_or_end():
     """ function p/ encerrar o programa ou continuar a adicionar"""
     while True:
         try:
-            a = input('Do you want to ADD more or END the program? [ADD][END]').strip().lower()
+            a = input('Do you want to: ADD more, LOOK again or END the program? [ADD][LOOK][END]').strip().lower()
             if a == 'end':
                 return False
             elif a == 'add':
                 return True
+            elif a == 'look':
+                show()
             else:
                 print('Wrong answer')
         except:
@@ -89,6 +94,7 @@ def add_or_end():
 
 
 def app_add_student():  # app
+    criando_pessoas(50)
     while True:
         filtro(adicionar())
         show()

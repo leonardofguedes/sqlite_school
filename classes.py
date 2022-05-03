@@ -22,10 +22,3 @@ class Student(Person):
     def sql_in(self):
         return self.nome, self.id, self.cpf, self.turma, self.matricula
 
-"""
-a = [('Leonardo', 1, 1, 2, 3), ('Rafael', 2, 123345, 5, 100), ('Paulo', 3, 123345, 11, 1234), ('Leoleo', 4, 1, 2, 3)]
-turma = int(input('turma'))
-for n in a:
-    if n[3] == turma:
-        print(n)
-"""
