@@ -1,4 +1,4 @@
-from classes import Person, Student
+from classes import Student
 from create_db import Cursor
 from itertools import chain
 from fake_students import criando_pessoas
@@ -14,12 +14,6 @@ def adicionar():
     return student1.sql_in()
 
 
-def filtro(iteravel):
-    """recolhe dados da Class e insere no dbase"""
-    Cursor.execute(f' INSERT INTO Alunos VALUES\n'
-                   f'("{iteravel[0]}","{iteravel[1]}", "{iteravel[2]}", "{iteravel[3]}", "{iteravel[4]}") ')
-
-
 def show_all():
     """function mostra todos os dados do db"""
     consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
@@ -28,11 +22,11 @@ def show_all():
 
 def show_students():
     """function mostra os students de uma turma"""
-    Consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
+    consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
     try:
         turma = int(input('Turma a consultar: ->'))
         print('Nome | ID | CPF | Turma | Matricula')
-        for n in Consulta:
+        for n in consulta:
             if n[3] == turma:
                 print(n)
     except:
@@ -96,7 +90,7 @@ def add_or_end():
 def app_add_student():  # app
     criando_pessoas(50)
     while True:
-        filtro(adicionar())
+        adicionar()
         show()
         if not add_or_end():
             break

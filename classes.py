@@ -1,3 +1,6 @@
+from create_db import Cursor
+
+
 class Person:
     id = 0
 
@@ -18,7 +21,7 @@ class Student(Person):
         Person.__init__(self, nome, cpf, turma)
         self.matricula = matricula
 
-
     def sql_in(self):
-        return self.nome, self.id, self.cpf, self.turma, self.matricula
-
+        student = self.nome, self.id, self.cpf, self.turma, self.matricula
+        Cursor.execute(f' INSERT INTO Alunos VALUES\n'
+                       f'("{student[0]}","{student[1]}", "{student[2]}", "{student[3]}", "{student[4]}") ')
