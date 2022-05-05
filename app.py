@@ -2,12 +2,25 @@ from classes import Student
 from create_db import Cursor
 from itertools import chain
 from fake_students import criando_pessoas
+from validate_docbr import CPF
+
+
+def cpf_analysis():
+    """Recebe e analisa a validade do CPF"""
+    while True:
+        cpf1 = str(input('Cpf: ->')).replace('.', '').replace('-', '')
+        cpf = CPF()
+        if cpf.validate(cpf1):
+            return cpf1
+        else:
+            print('Invalid CPF')
+            print('*'*30)
 
 
 def adicionar():
     """recebe dados do usuário e insere na class"""
     nome = input('Nome: ->')
-    cpf = (input('Cpf: ->'))
+    cpf = cpf_analysis()
     turma = int(input('Turma: ->'))
     matricula = int(input('Matricula: ->'))
     student1 = Student(nome, cpf, turma, matricula)
