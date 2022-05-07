@@ -18,12 +18,12 @@ def cpf_analysis():
 
 
 def adicionar():
-    """recebe dados do usuário e insere na class"""
+    """Recebe dados do usuário e insere na class"""
     nome = input('Nome: ->')
     cpf = cpf_analysis()
     turma = int(input('Turma: ->'))
-    matricula = int(input('Matricula: ->'))
-    student1 = Student(nome, cpf, turma, matricula)
+    ano_nascimento = int(input('Ano de nascimento: ->'))
+    student1 = Student(nome, cpf, turma, ano_nascimento)
     return student1.sql_in()
 
 
@@ -34,7 +34,7 @@ def show_all():
 
 
 def show_students():
-    """function mostra os students de uma turma"""
+    """Function mostra os students de uma turma"""
     consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
     try:
         turma = int(input('Turma a consultar: ->'))
@@ -46,8 +46,18 @@ def show_students():
         pass
 
 
+def show_matricula():
+    """Pesquisar matricula específica"""
+    consulta = Cursor.execute(' SELECT * FROM Alunos').fetchall()
+    matricula = int(input('Matricula a consultar: ->'))
+    for n in consulta:
+        if n[1] == matricula:
+            print(f'Nome: {n[0]}, Matricula {n[1]}, CPF {n[2]}, Turma: {n[3]}, Ano de Nascimento: {n[4]}')
+
+
+
 def list_classes(iteravel):
-    """function que extrai apenas int do iterável e ignora turmas repetidas"""
+    """Function que extrai apenas int do iterável e ignora turmas repetidas"""
     temp = map(lambda i: str(i), chain.from_iterable(iteravel))
     d = []
     for ele in temp:
@@ -73,12 +83,14 @@ def show():
         pass
     else:
         print('Show especifics:')
-        especifics = input('Classes [C] or Students of Classes [SC]: ->').strip().lower()
+        especifics = input('Classes [C] or Students of Classes [SC] or Matriculas [MA]: ->').strip().lower()
         if especifics == 'c':
             print('Show Classes:')
             show_classes()
-        if especifics == 'sc':
+        elif especifics == 'sc':
             show_students()
+        elif especifics == 'ma':
+            show_matricula()
         else:
             pass
 
@@ -101,7 +113,7 @@ def add_or_end():
 
 
 def app_add_student():  # app
-    criando_pessoas(50)
+    criando_pessoas(500)
     while True:
         adicionar()
         show()
