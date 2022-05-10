@@ -3,7 +3,8 @@ from create_db import Cursor
 from itertools import chain
 from fake_students import criando_pessoas
 from validate_docbr import CPF
-
+from decorative import decorative_add_student
+from data_from_school import confere_turma
 
 def cpf_analysis():
     """Recebe e analisa a validade do CPF"""
@@ -21,7 +22,7 @@ def adicionar():
     """Recebe dados do usuário e insere na class"""
     nome = input('Nome: ->')
     cpf = cpf_analysis()
-    turma = int(input('Turma: ->'))
+    turma = confere_turma()
     ano_nascimento = int(input('Ano de nascimento: ->'))
     student1 = Student(nome, cpf, turma, ano_nascimento)
     return student1.sql_in()
@@ -112,8 +113,10 @@ def add_or_end():
             print('Wrong answer')
 
 
+
 def app_add_student():  # app
     criando_pessoas(500)
+    decorative_add_student()
     while True:
         adicionar()
         show()
@@ -123,4 +126,4 @@ def app_add_student():  # app
             pass
 
 
-app_add_student()
+

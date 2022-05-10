@@ -1,5 +1,6 @@
 from create_db_schedule import Cursor
 from data_from_school import confere_dia_da_semana, confere_materias, confere_sala
+from decorative import decorative_add_schedule
 
 
 def consulta_teacher(t, d):
@@ -31,7 +32,7 @@ def consulta_room(d, r):
 def add_class():
     """Recebe os dados, verifica sua validade com outros programas e depois insere-os no data base"""
     while True:
-        day = str(input('Dia da semana: ->'))
+        day = str(input('Dia da semana: ->')).strip().lower()
         if confere_dia_da_semana(day) == False:
             return False
         teacher = str(input('Professor: ->'))
@@ -59,8 +60,9 @@ def add_class():
         return False
 
 
-def sistem():
+def app_add_schedule():
     """Programa"""
+    decorative_add_schedule()
     while True:
         add_class()
         mostrar_acabar_continuar = input('show, end, continue? [s][e][c]').lower().strip()
@@ -70,6 +72,6 @@ def sistem():
         elif mostrar_acabar_continuar == 'c':
             pass
         else:
-            return False
+            break
 
-sistem()
+
