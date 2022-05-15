@@ -26,5 +26,7 @@ Etapas já desenvolvidas:
 11. Criar função que avalia se a turma a ser adicionada existe.
 
 12. Criar função decorativa simples para informar que o sistema está funcionando.
+
+13. Refatorar a função 8.
 ```
 
