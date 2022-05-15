@@ -25,6 +25,8 @@ def adicionar():
     turma = confere_turma()
     ano_nascimento = int(input('Ano de nascimento: ->'))
     student1 = Student(nome, cpf, turma, ano_nascimento)
+    print('Matricula criada')
+    print(f'{student1.nome} pertence a turma {student1.turma}')
     return student1.sql_in()
 
 
@@ -54,6 +56,8 @@ def show_matricula():
     for n in consulta:
         if n[1] == matricula:
             print(f'Nome: {n[0]}, Matricula {n[1]}, CPF {n[2]}, Turma: {n[3]}, Ano de Nascimento: {n[4]}')
+        else:
+            print('Matricula não encontrada')
 
 
 
@@ -100,7 +104,7 @@ def add_or_end():
     """ function p/ encerrar o programa ou continuar a adicionar"""
     while True:
         try:
-            a = input('Do you want to: ADD more, LOOK again or END the program? [ADD][LOOK][END]').strip().lower()
+            a = input('Do you want to: ADD more, LOOK again or END with Students? [ADD][LOOK][END]').strip().lower()
             if a == 'end':
                 return False
             elif a == 'add':

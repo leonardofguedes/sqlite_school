@@ -1,77 +1,53 @@
 from create_db_schedule import Cursor
-from data_from_school import confere_dia_da_semana, confere_materias, confere_sala
+from data_from_school import confere_dia_da_semana, confere_materias, confere_sala, confere_turma, confere_professor
 from decorative import decorative_add_schedule
 
 
-def consulta_teacher(t, d):
-    """Consulta se o professor está disponível naquela data"""
+def conferencia_disponibilidade(day, teacher, room, turma):
+    """Confere a disponibilidade da sala, turma e professor"""
     consulta = Cursor.execute(' SELECT * FROM Schedule').fetchall()
     for n in consulta:
-        if n[0] == t:
-            if n[1] == d:
-                return False
-            else:
-                pass
+        if n[1] == day and n[3] == turma:
+            print(f'A turma {turma} não está disponível na {day}.')
+            return False
+        elif n[1] == day and n[2] == room:
+            print(f'A sala {room} não está disponível na {day}.')
+            return False
+        elif n[1] == day and n[0] == teacher:
+            print(f'Professor indisponível na {day}.')
+            return False
         else:
-            pass
-
-
-def consulta_room(d, r):
-    """Consulta se a sala está disponível naquela data"""
-    consulta = Cursor.execute(' SELECT * FROM Schedule').fetchall()
-    for n in consulta:
-        if n[1] == d:
-            if n[2] == r:
-                return False
-            else:
-                pass
-        else:
-            pass
+            return True
 
 
 def add_class():
     """Recebe os dados, verifica sua validade com outros programas e depois insere-os no data base"""
     while True:
-        day = str(input('Dia da semana: ->')).strip().lower()
-        if confere_dia_da_semana(day) == False:
-            return False
-        teacher = str(input('Professor: ->'))
-        a = consulta_teacher(teacher, day)
-        if a == False:
-            print('Teacher busy in this day')
-            return False
+        day = confere_dia_da_semana()
+        teacher = confere_professor()
+        room = confere_sala()
+        materia = confere_materias()
+        turma = confere_turma()
+        analise = conferencia_disponibilidade(day,teacher,room,turma)
+        if analise == True or analise == None:
+            Cursor.execute(f' INSERT INTO Schedule VALUES\n'
+                               f'("{teacher}","{day}", "{room}", "{turma}", "{materia}") ')
+            break
         else:
-            pass
-        room = int(input('Sala: ->'))
-        if confere_sala(room) == False:
-            return False
-        b = consulta_room(day, room)
-        if b == False:
-            print('Room not available')
-            return False
-        else:
-            pass
-        materia = input('Matéria: ->')
-        if confere_materias(materia) == False:
-            return False
-        turma = input('Turma: ->')
-        Cursor.execute(f' INSERT INTO Schedule VALUES\n'
-                           f'("{teacher}","{day}", "{room}", "{turma}", "{materia}") ')
-        return False
+            print('Os dados inseridos não se ajustam aos horários disponíveis')
+            break
 
 
 def app_add_schedule():
     """Programa"""
     decorative_add_schedule()
     while True:
-        add_class()
-        mostrar_acabar_continuar = input('show, end, continue? [s][e][c]').lower().strip()
+        mostrar_acabar_continuar = input('Show data, End program, Continue adding? [s][e][c]').lower().strip()
         if mostrar_acabar_continuar == 's':
             consulta = Cursor.execute(' SELECT * FROM Schedule').fetchall()
             print(consulta)
         elif mostrar_acabar_continuar == 'c':
-            pass
+            add_class()
         else:
             break
-
 

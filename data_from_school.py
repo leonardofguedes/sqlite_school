@@ -1,5 +1,9 @@
 import unidecode
 
+professores = [
+    # Professores listados
+    'leonardo', 'paulo', 'marina', 'marcos', 'gabriel', 'joaquim', ' maria', 'rosana', 'isadora',
+]
 
 materias = [
     # Matérias aceitas na escola
@@ -21,32 +25,42 @@ turmas_escola = [
     100,101,200,201,300,301,400,401,500,501
 ]
 
-def confere_materias(word):
-    """Função para conferir a validade das matérias inseridas no programa"""
-    a = unidecode.unidecode(word)
-    if a in materias:
-        pass
-    if a not in materias:
-        print('Essa matéria não é válida')
-        return False
-
-
-def confere_dia_da_semana(word):
+def confere_dia_da_semana():
     """Função para conferir os dias inseridos no programa"""
-    if word in dias_da_semana:
-        pass
-    if word not in dias_da_semana:
-        print('Esse dia não é válido.')
-        return False
+    while True:
+        day = str(input('Dia da semana: ->')).strip().lower()
+        if day in dias_da_semana:
+            return day
+        if day not in dias_da_semana:
+            print('Esse dia não é válido.')
 
+def confere_professor():
+    """Função para conferir a validade dos professores inseridas no programa"""
+    while True:
+        professor = str(input('Professor: ->'))
+        if professor in professores:
+            return professor
+        if professor not in professores:
+            print('Esse professor não está cadastrado.')
 
-def confere_sala(word):
+def confere_sala():
     """Função para conferir se as salas do programa estão disponíveis"""
-    if word in salas:
-        pass
-    if word not in salas:
-        print('Essa sala não existe.')
-        return False
+    while True:
+        room = int(input('Sala: ->'))
+        if room in salas:
+            return room
+        if room not in salas:
+            print('Essa sala não existe.')
+
+def confere_materias():
+    """Função para conferir a validade das matérias inseridas no programa"""
+    while True:
+        materia = str(input('Matéria: ->')).lower()
+        a = unidecode.unidecode(materia)
+        if a in materias:
+            return a
+        if a not in materias:
+            print('Essa não é válida')
 
 def confere_turma():
     """Função para conferir se a turma existe"""
